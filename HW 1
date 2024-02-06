@@ -1,0 +1,27 @@
+##Java
+public class PalindromeChecker {
+    public boolean isPalindrome(String s) {
+        String sanitized = s.toLowerCase().replaceAll("[^a-z0-9]", "");
+        String reversed = new StringBuilder(sanitized).reverse().toString();
+        return sanitized.equals(reversed);
+    }
+
+    public static void main(String[] args) {
+        PalindromeChecker checker = new PalindromeChecker();
+        //testing string
+        String test = "no lemon, no melon";
+
+        System.out.println(checker.isPalindrome(test)); // Output: true
+    }
+}
+
+
+##Python
+def is_palindrome(s: str) -> bool:
+    sanitized = ''.join(c.lower() for c in s if c.isalnum())
+    return sanitized == sanitized[::-1]
+
+if __name__ == "__main__":
+    test = "no lemon, no melon"
+    print(is_palindrome(test)) # Output: True
+
