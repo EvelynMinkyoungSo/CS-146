@@ -1,0 +1,16 @@
+Step 1
+Convert the input string to lowercase and remove all non-alphanumeric characters. 
+This standardizes the input for comparison.
+
+Step 2
+In Java, I use the `StringBuilder` class to reverse the sanitized string
+and then compare it with the original sanitized string.
+In Python, I use slicing to reverse the sanitized string and perform the comparison.
+
+Step 3
+Java Compile and run `PalindromeChecker.java`. It includes a main method for testing.
+Python Run `palindrome_checker.py` directly as it includes a test case in the `if __name__ == "__main__":` block.
+
+Step 4
+The provided solutions efficiently solve the palindrome problem by focusing on string manipulation and 
+comparison techniques in both Java and Python.
