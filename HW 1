@@ -1,4 +1,4 @@
-##Java
+//Java
 public class PalindromeChecker {
     public boolean isPalindrome(String s) {
         String sanitized = s.toLowerCase().replaceAll("[^a-z0-9]", "");
@@ -15,6 +15,8 @@ public class PalindromeChecker {
     }
 }
 
+// Output 
+true
 
 ##Python
 def is_palindrome(s: str) -> bool:
@@ -25,3 +27,5 @@ if __name__ == "__main__":
     test = "no lemon, no melon"
     print(is_palindrome(test)) # Output: True
 
+##Output
+true
