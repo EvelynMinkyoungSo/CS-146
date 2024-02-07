@@ -1,6 +1,60 @@
 //Java
+public class VersionControl {
+    // Simulated API method: Check if a specific version is invalid.
+    // Assumes this method has been implemented correctly elsewhere.
+    boolean isBadVersion(int version) {
+        return true; // Placeholder implementation.
+    }
+}
+
+public class Solution extends VersionControl {
+    public int firstBadVersion(int n) {
+        int left = 1; // Start of the version range.
+        int right = n; // End of the version range.
+        // Continue searching as long as there is more than one version in scope.
+        while (left < right) {
+            // Calculate the midpoint to prevent integer overflow.
+            int mid = left + (right - left) / 2;
+            
+            // Check if the midpoint version is bad.
+            if (isBadVersion(mid)) {
+                // If mid is bad, the first bad version must be at mid or before.
+                // So we adjust the search range to the left half, including mid.
+                right = mid;
+            } else {
+                // If mid is not bad, the first bad version must be after mid.
+                // So, we adjust the search range to the right half, excluding mid.
+                left = mid + 1;
+            }
+        }
+        // When left equals right, we've found the first bad version.
+        return left; // left is the first bad version.
+    }
+}
 
 
-//Python
 
+##Python
+
+# isBadVersion(version) is assumed to be a predefined API that checks if the version is bad.
+
+def firstBadVersion(n):
+    left = 1  # Start of the version range.
+    right = n  # End of the version range.
+    # Continue searching as long as there is more than one version in scope.
+    while left < right:
+        # Calculate the midpoint to prevent integer overflow.
+        mid = left + (right - left) // 2
+        
+        # Check if the midpoint version is bad.
+        if isBadVersion(mid):
+            # If mid is bad, the first bad version must be at mid or before.
+            # Adjust the search range to the left half, including mid.
+            right = mid
+        else:
+            # If mid is not bad, the first bad version must be after mid.
+            # Adjust the search range to the right half, excluding mid.
+            left = mid + 1
+    # When left equals right, we've found the first bad version.
+    return left  # left is the first bad version.
 
