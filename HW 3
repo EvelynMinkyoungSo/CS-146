@@ -47,6 +47,62 @@ MATRIX_MULTIPLY(A, B):
       sum ← sum + A[i][k] * B[k][j] 
     result[i][j] ← sum return result
 
+//Example Java code//
+public class MatrixMultiplication {
+
+    public static int[][] matrixMultiply(int[][] A, int[][] B) {
+        int rowsA = A.length;
+        int colsA = A[0].length;
+        int rowsB = B.length;
+        int colsB = B[0].length;
+
+        // Check if matrix multiplication is possible
+        if (colsA != rowsB) {
+            throw new IllegalArgumentException("Matrix multiplication is not defined for these matrices.");
+        }
+
+        // Initialize the result matrix with zeros
+        int[][] result = new int[rowsA][colsB];
+
+        // Perform matrix multiplication
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // Example matrices A and B
+        int[][] A = {
+            {8, 9, 10},
+            {4, 5, 6}
+        };
+        int[][] B = {
+            {7, 8},
+            {9, 10},
+            {11, 12}
+        };
+
+        // Perform matrix multiplication
+        int[][] result = matrixMultiply(A, B);
+
+        // Print the result matrix
+        System.out.println("Result of matrix multiplication:");
+        for (int[] row : result) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
 The process for multiplying two matrices A and B.  
 It verifies if the number of columns in A matches the number of rows in B, then initializes a result matrix filled with zeros.
 For each element in the result matrix, it computes the sum of products of corresponding elements from the row in A and colums in B.
