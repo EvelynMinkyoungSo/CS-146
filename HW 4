@@ -1,0 +1,119 @@
+Problem 1: Insertion sort
+
+public static int[] insertionSort(int[] A, int n) {
+    for (int i = 1; i < n; ++i) { // Corrected N to n
+        int key = A[i];
+        int j = i - 1;
+        while (j >= 0 && A[j] > key) {
+            A[j + 1] = A[j];
+            j = j - 1;
+        }
+        A[j + 1] = key;
+    }
+    return A;
+}
+
+// Time complexity//
+1. Best Case
+The best-case scenario occurs if the array is already sorted. 
+In this case, the algorithm compares only once per element, and each element is already in the right position, so no shifts are neccessary.
+Thus, the time complexity in the best-case scenario is \(O(n)\), where \(n\) is the size of the array.
+2. Worst Case
+The worst-case scenario occurs if the arrays are ordered in reverse order. 
+For each element \(A[i]\) (starting with \(i = 1\), the algorithm compares it to all previous elements from \(A[0]\) to \(A[i-1]\), 
+resulting in a total of \(1 + 2 + \cds + (n-1) = \frac{n(n-1)}{2}\). 
+Thus, in the worst-case scenario time complexity is \(O(n^2)\).
+3. Average Case
+On average, insertion sort algorithm will perform between the best and worst cases according to the initial order of the elements. 
+The time complexity for the average case \(n^2)\ is also \(O(n^2)\), as each insertion into a partially ordered array of \(i\) elements requires moving half of that \(i\) elements on average.
+
+
+
+Problem 2:
+
+MATRIX_MULTIPLY(A, B): 
+  if columns(A) ≠ rows(B): 
+    raise ValueError("Matrix multiplication is not defined.") 
+
+  rows_A ← number of rows in A 
+  cols_A ← number of columns in A 
+  cols_B ← number of columns in B 
+  result ← matrix of size rows_A x cols_B filled with zeros 
+
+  for i from 1 to rows_A do: 
+    for j from 1 to cols_B do: 
+    sum ← 0 
+    for k from 1 to cols_A do: 
+      sum ← sum + A[i][k] * B[k][j] 
+    result[i][j] ← sum return result
+
+//Example Java code//
+public class MatrixMultiplication {
+
+    public static int[][] matrixMultiply(int[][] A, int[][] B) {
+        int rowsA = A.length;
+        int colsA = A[0].length;
+        int rowsB = B.length;
+        int colsB = B[0].length;
+
+        // Check if matrix multiplication is possible
+        if (colsA != rowsB) {
+            throw new IllegalArgumentException("Matrix multiplication is not defined for these matrices.");
+        }
+
+        // Initialize the result matrix with zeros
+        int[][] result = new int[rowsA][colsB];
+
+        // Perform matrix multiplication
+        for (int i = 0; i < rowsA; i++) {
+            for (int j = 0; j < colsB; j++) {
+                for (int k = 0; k < colsA; k++) {
+                    result[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        // Example matrices A and B
+        int[][] A = {
+            {8, 9, 10},
+            {4, 5, 6}
+        };
+        int[][] B = {
+            {7, 8},
+            {9, 10},
+            {11, 12}
+        };
+
+        // Perform matrix multiplication
+        int[][] result = matrixMultiply(A, B);
+
+        // Print the result matrix
+        System.out.println("Result of matrix multiplication:");
+        for (int[] row : result) {
+            for (int value : row) {
+                System.out.print(value + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+The process for multiplying two matrices A and B.  
+It verifies if the number of columns in A matches the number of rows in B, then initializes a result matrix filled with zeros.
+For each element in the result matrix, it computes the sum of products of corresponding elements from the row in A and colums in B.
+
+//Algorithm configuration//
+1. The outer loop repeats each row of matrix A.
+2. The intermediate loop repeats each column of matrix B.
+3. The inner loop performs the inner workings of the rows of A and the columns of B, 
+repeating each element of the rows and columns for multiplication and summing up the results.
+
+//Time Complexity//
+For each \(m\) row of A, the algorithm repeats each \(p\) column of B and computes a point for each row and column pair. 
+\(n\) A product with multiplication and addition. Thus, the total time complexity is \(O(mnp)\). 
+This indicates that the performance of the algorithm is directly proportional to the product of the matrix dimension involved.
