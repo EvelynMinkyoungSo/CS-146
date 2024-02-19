@@ -1,0 +1,54 @@
+Problem 1:
+For each of the following recurrences, verify the answer you get by applying the master method, by solving the recurrence algebraically OR applying the recursion tree method. 
+
+1) T(N) = 2T(N-1) + 1
+T(n)=2T(n−1)+1 = 2(2T(n−2)+1)+1 = 2^2 T(n−2)+2+1 = 2^nT(1)-1
+Assume T(1) = a 
+T(n) = 2^n * a - (2^n -1)
+T(n) = O(2^n)
+
+2) T(N) = 3T(N-1) + n
+O(3^n)
+
+3) T(N) = 9T(N/2) + n^2
+a=9 b=2 f(n) = n^2
+n^log_b(a) = n^log_2(9) = n^3.17)
+T(n) = Θ(n^3.17)
+
+4) T(N) = 100T(N/2) + n^{log2cn + 1}  (c is a constant)
+a=100 b=2 f(n)=n^(k+1)
+n^(log_b(a)) = n^(log_2(100)) = n^2
+
+5) T(N) = 4T(N/2) + n^2logn
+a=4 b=2 f(n)=n^2 log(n)
+n^log_b(a) = n^log_2(4) = n^2
+T(n)= Θ(n^2 log^2(n)).
+
+6) T(N) = 5T(N/2) + n^2/log(n)
+a=5 b=2 f(n)=n^2/log(n)
+n^(log_b(a)) = n^(log_2(5))
+
+Problem 2:
+Below is some pseudocode. Come up with a recurrence relation, and solve that recurrence relation using any method of your choice.  
+
+yetAnotherFunc(n): 
+  if n > 1: 
+    for(i=0;i<10n;i++)
+      doSomething;
+    yetAnotherFunc(n/2);
+    yetAnotherFunc(n/2);
+
+n greater than 1, 
+runs a loop 10n times and then makes two recursive calls to itself, 
+each time with n/2 as the new argument
+
+doSomething within the for-loop runs 10n times and is the only non recursive work done by the function, 
+which denote as O(n) for the purposes of our recurrence relation
+
+T(n)=2T(2/n)+O(10n)
+c is a constant representing the 10 times of work done for doSomething
+T(n)=2T(2/n)+cn
+a=2 b=2 f(n)=cn
+T(n)=aT(n/b)+f(n)
+logb (a) = log2 (2) = 1
+yetAnotherFunc is Θ(n log n)
