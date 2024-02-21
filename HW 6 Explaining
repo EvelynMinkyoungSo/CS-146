@@ -1,0 +1,23 @@
+Constraints
+Avoiding Duplicate Triplets
+Order of Output and Triplets Does Not Matter
+Array Length Constraint (3 <= nums.length <= 3000)
+Value Range Constraint (-10^5 <= nums[i] <= 10^5)
+
+High-level approach
+
+1) Sort the array
+
+2) Repeat the aligned arrangement using a fixed pointer. 
+For each element of the fixed pointer, look for two different elements that when added together with the current element, sum up to zero.
+
+3) Apply the two pointer techniques to each element of the array (fixed by an external loop).
+Left: Immediately after the current element
+Right: At the end of the array
+Move these pointers towards each other to find a pair that sum up the negative values of the current element.
+
+4) After finding a valid triplet, skip the duplicate values for both the left and right pointers. 
+This step is important to ensure the uniqueness of each triplet in the solution set. 
+It also skips the duplicate for the fixed pointer to prevent more than one processing of the same elements as the starting point of three pairs.
+
+
