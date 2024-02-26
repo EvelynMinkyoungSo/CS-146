@@ -1,0 +1,37 @@
+HW 7 Python
+
+from typing import List
+import heapq
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+#Check if intervals is empty
+        if not intervals:
+            return 0
+Sort intervals based on start time
+        intervals.sort(key=lambda x: x[0])
+
+# Initialize a list to track the end times of ongoing meetings
+        free_rooms = [intervals[0][1]]
+
+# Iterate through the sorted intervals
+        for i in range(1, len(intervals)):
+            if intervals[i][0] >= free_rooms[0]:
+                heapq.heappop(free_rooms)
+# Add the end time of the current interval to the list of ongoing meetings
+            heapq.heappush(free_rooms, intervals[i][1])
+
+        return len(free_rooms)
+
+if __name__ == "__main__":
+# The number of intervals
+    n = int(input("Enter the number of intervals: "))
+    intervals = []
+# Input start and end times for each interval
+    for _ in range(n):
+        start, end = map(int, input("Enter start and end time for an interval separated by space: ").split())
+        intervals.append([start, end])
+
+    solution = Solution()
+# Print the minimum number of servers required
+    print("Minimum number of servers required:", solution.minMeetingRooms(intervals))
