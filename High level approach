@@ -1,0 +1,24 @@
+My solution to this problem focuses on computing the number of occurrences of each character 
+in the input string and then determining how these can contribute to the palindromic length.
+
+First Step:
+In python a dictionary char_count is used to map each character to its number of accurences in the string, 
+and In Java an integer array charCounts of size 128 used to count occurrence, 
+assum the input string only contains ASCII characters.
+
+Second Step:
+Even and Odd
+If a character count is even, all occurrences can be used in the palindrome symmetrically.
+If a character count is odd, `count - 1` occurrences can be used to maintain symmetry. 
+Additionally, if the center of the palindrome hasn't been set yet, 
+one occurrence of this character can be placed in the center.
+
+The point is solution take palindrome reflects around it center.
+So characters must appear in pairs mirror around the center, 
+except possibly for one character that can appear unpaired in the center of the palindrome.
+
+Time complexity:
+O(n), n is length of the string
+Space complexity:
+O(1)
+
