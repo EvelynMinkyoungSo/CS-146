@@ -1,0 +1,53 @@
+Java Solution
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a Scanner object to read input
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a string: ");
+        // Read the user input string
+        String input = scanner.nextLine();
+
+        Solution sol = new Solution();
+        // Print the result of the longestPalindrome
+        System.out.println("The length of the longest palindrome that can be built is: " + sol.longestPalindrome(input));
+    }
+}
+
+class Solution {
+    public int longestPalindrome(String s) {
+        // Initialize an array
+        // to count the number of occurrences of each ASCII character
+        int[] charCounts = new int[128];
+        // Repeat for each character in the string
+        for (char c : s.toCharArray()) {
+            // Increment the count for this character
+            charCounts[c]++;
+        }
+
+        int length = 0;
+        //Hold the length of the longest palindrome
+        boolean centerAdded = false;
+        for (int count : charCounts) {
+            if (count % 2 == 0) {
+                // If count is even, it can be fully used in the palindrome
+                length += count;
+            } else {
+                // If count is odd, use count-1 characters
+                // and check if a center character can be added
+                length += count - 1;
+                if (!centerAdded) {
+                    // Add one character to the center of the palindrome,
+                    // if not added yet
+                    length += 1;
+                    centerAdded = true;
+                }
+            }
+        }
+
+        return length;
+    }
+}
+
+
