@@ -1,0 +1,58 @@
+class TreeNode(object):
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution(object):
+    def invertTree(self, root):
+        if root is None:
+            return None
+        
+        # Swap the left and right children
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        
+        return root
+
+def printTree(root):
+    """
+    Print the tree in level order
+    """
+    if root is None:
+        return
+    
+    queue = [root]
+    while queue:
+        node = queue.pop(0)
+        print(node.val)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+
+# Create the tree structure from the problem statement:
+#         1
+#       /   \
+#      2     8
+#     / \   / \
+#    3   4 5   6
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(8)
+root.left.left = TreeNode(3)
+root.left.right = TreeNode(4)
+root.right.left = TreeNode(5)
+root.right.right = TreeNode(6)
+
+# Invert the tree
+solution = Solution()
+inverted_root = solution.invertTree(root)
+
+# Print the inverted tree
+printTree(inverted_root)
+
+#         1
+#       /   \
+#      8     2
+#     / \   / \
+#    6   5 4   3
