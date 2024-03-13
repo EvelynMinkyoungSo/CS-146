@@ -1,0 +1,77 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+        // Create the tree structure from the problem statement
+//         1
+//       /   \
+//      2     8
+//     / \   / \
+//    3   4 5   6
+        TreeNode tree = new TreeNode(1);
+        tree.left = new TreeNode(2);
+        tree.right = new TreeNode(8);
+        tree.left.left = new TreeNode(3);
+        tree.left.right = new TreeNode(4);
+        tree.right.left = new TreeNode(5);
+        tree.right.right = new TreeNode(6);
+
+        // Invert the tree
+        tree = invertTree(tree);
+
+        // Output the inverted tree
+        printTree(tree);
+    }
+
+//         1
+//       /   \
+//      8     2
+//     / \   / \
+//    6   5 4   3
+
+    public static TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        TreeNode temp = root.left;
+        root.left = invertTree(root.right);
+        root.right = invertTree(temp);
+
+        return root;
+    }
+
+    public static void printTree(TreeNode root) {
+        if (root == null) return;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            TreeNode current = queue.remove();
+            System.out.println(current.val);
+            if (current.left != null) queue.add(current.left);
+            if (current.right != null) queue.add(current.right);
+        }
+    }
+
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode() {}
+
+        TreeNode(int val) {
+            this.val = val;
+        }
+
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+}
