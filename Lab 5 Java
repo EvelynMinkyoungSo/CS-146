@@ -1,0 +1,68 @@
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+}
+
+class ValidateBST {
+    public static boolean isValidBST(TreeNode root) {
+        return isBSTUtil(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private static boolean isBSTUtil(TreeNode node, long left_limit, long right_limit) {
+        if (node == null) {
+            return true;
+        }
+        if (node.val <= left_limit || node.val >= right_limit) {
+            return false;
+        }
+        return isBSTUtil(node.left, left_limit, node.val) && isBSTUtil(node.right, node.val, right_limit);
+    }
+
+    private static TreeNode createTreeFromInput(String[] values) {
+        if (values[0].equals("null")) return null;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        TreeNode root = new TreeNode(Integer.parseInt(values[0]));
+        queue.offer(root);
+
+        int i = 1;
+        while (!queue.isEmpty() && i < values.length) {
+            TreeNode current = queue.poll();
+
+            if (!values[i].equals("null")) {
+                current.left = new TreeNode(Integer.parseInt(values[i]));
+                queue.offer(current.left);
+            }
+            i++;
+
+            if (i < values.length && !values[i].equals("null")) {
+                current.right = new TreeNode(Integer.parseInt(values[i]));
+                queue.offer(current.right);
+            }
+            i++;
+        }
+        return root;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the tree values level by level and use 'null' for no node:");
+
+        String input = scanner.nextLine();
+        String[] values = input.split(" ");
+
+        TreeNode root = createTreeFromInput(values);
+
+        System.out.println("Is the entered tree a valid BST? " + isValidBST(root));
+        scanner.close();
+    }
+}
