@@ -1,0 +1,53 @@
+class Solution:
+    def floodFill(self, image, sr, sc, newColor):
+        originalColor = image[sr][sc]
+        if originalColor == newColor:
+            return image  # Return early if the color is the same to avoid infinite recursion
+        
+        def dfs(x, y):
+            if x < 0 or x >= len(image) or y < 0 or y >= len(image[0]) or image[x][y] != originalColor:
+                return
+            image[x][y] = newColor  # Change the color
+            
+            # Recursively visit all connecting pixels (4-directionally)
+            dfs(x + 1, y)
+            dfs(x - 1, y)
+            dfs(x, y + 1)
+            dfs(x, y - 1)
+        
+        dfs(sr, sc)  # Start the DFS from the given pixel
+        return image
+
+if __name__ == "__main__":
+    print("Enter the dimensions of the image (m x n): ")
+    m, n = map(int, input().split())
+
+    if m <= 0 or n <= 0:
+        print(Invalid dimensions.)
+        exit()
+
+    image = []
+    print("Enter the pixel values of the image row by row:")
+    for _ in range(m):
+        row = list(map(int, input().split()))
+        if len(row) != n:
+            print("Invalid input detected. Exiting.")
+            exit()
+        image.append(row)
+    
+    print("Enter the starting pixel coordinates (sr, sc):")
+    sr, sc = map(int, input().split())
+
+    if sr < 0 or sr >= m or sc < 0 or sc >= n:
+        print("Starting pixel coordinates are out of bounds. Make sure 0 <= sr < m and 0 <= sc < n.")
+        exit()
+
+    print("Enter the new color:")
+    newColor = int(input())
+    
+    solution = Solution()
+    modified_image = solution.floodFill(image, sr, sc, newColor)
+    
+    print("Modified Image:")
+    for row in modified_image:
+        print(' '.join(map(str, row)))
