@@ -1,0 +1,70 @@
+from collections import deque
+from typing import List, Optional
+
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        levels = []
+        if root is None:
+            return levels
+
+        queue = deque([root])
+
+        while queue:
+            levelSize = len(queue)
+            level = []
+
+            for _ in range(levelSize):
+                node = queue.popleft()
+                level.append(node.val)
+
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            levels.append(level)
+
+        return levels
+
+def buildTree(levelOrder: List[Optional[int]]) -> Optional[TreeNode]:
+    if not levelOrder:
+        return None
+
+    iter_levelOrder = iter(levelOrder)
+    root = TreeNode(next(iter_levelOrder))
+    queue = deque([root])
+
+    while queue:
+        current = queue.popleft()
+        try:
+            leftVal = next(iter_levelOrder)
+            if leftVal is not None:
+                current.left = TreeNode(leftVal)
+                queue.append(current.left)
+        except StopIteration:
+            break
+
+        try:
+            rightVal = next(iter_levelOrder)
+            if rightVal is not None:
+                current.right = TreeNode(rightVal)
+                queue.append(current.right)
+        except StopIteration:
+            break
+
+    return root
+
+if __name__ == "__main__":
+    levelOrderStr = input("Enter the level order representation of the tree (Space is separated list):")
+    levelOrder = [int(val) if val != 'None' else None for val in levelOrderStr.split()]
+
+    root = buildTree(levelOrder)
+    solution = Solution()
+    levelOrderOutput = solution.levelOrder(root)
+    print("Level Order Traversal:", levelOrderOutput)
