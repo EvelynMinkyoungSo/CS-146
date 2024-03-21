@@ -10,7 +10,7 @@ public class Solution {
         int n = scanner.nextInt();
 
         if (m <= 0 || n <= 0) {
-            System.out.println("Invalid dimensions. Make sure both m and n are greater than 0.");
+            System.out.println("Invalid dimensions");
             scanner.close();
             return;
         }
