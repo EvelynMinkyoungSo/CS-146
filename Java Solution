@@ -1,0 +1,75 @@
+import java.util.Scanner;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the dimensions of the image (m x n):");
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+
+        if (m <= 0 || n <= 0) {
+            System.out.println("Invalid dimensions. Make sure both m and n are greater than 0.");
+            scanner.close();
+            return;
+        }
+
+        int[][] image = new int[m][n];
+        System.out.println("Enter the pixel values of the image row by row:");
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (scanner.hasNextInt()) {
+                    image[i][j] = scanner.nextInt();
+                } else {
+                    System.out.println("Invalid input detected. Exiting.");
+                    scanner.close();
+                    return;
+                }
+            }
+        }
+
+        System.out.println("Enter the starting pixel coordinates (sr, sc):");
+        int sr = scanner.nextInt();
+        int sc = scanner.nextInt();
+
+        if (sr < 0 || sr >= m || sc < 0 || sc >= n) {
+            System.out.println("Starting pixel coordinates are out of bounds. Make sure 0 <= sr < m and 0 <= sc < n.");
+            scanner.close();
+            return;
+        }
+
+        System.out.println("Enter the new color:");
+        int newColor = scanner.nextInt();
+
+        Solution solution = new Solution();
+        image = solution.floodFill(image, sr, sc, newColor);
+
+        System.out.println("Modified Image:");
+        for (int[] row : image) {
+            for (int pixel : row) {
+                System.out.print(pixel + " ");
+            }
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        if (image[sr][sc] == newColor) return image;
+        fill(image, sr, sc, image[sr][sc], newColor);
+        return image;
+    }
+
+    private void fill(int[][] image, int sr, int sc, int color, int newColor) {
+        if (sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length || image[sr][sc] != color) {
+            return;
+        }
+        image[sr][sc] = newColor;
+        fill(image, sr + 1, sc, color, newColor);
+        fill(image, sr - 1, sc, color, newColor);
+        fill(image, sr, sc + 1, color, newColor);
+        fill(image, sr, sc - 1, color, newColor);
+    }
+}
