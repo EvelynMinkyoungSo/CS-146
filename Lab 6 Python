@@ -1,0 +1,37 @@
+class CourseSchedule:
+    def __init__(self):
+        self.graph = []
+        self.visited = set()
+    
+    def hasCycle(self, course, visiting):
+        if course in self.visited:
+            return False
+        if course in visiting:
+            return True
+
+        visiting.add(course)
+        for neighbor in self.graph[course]:
+            if self.hasCycle(neighbor, visiting):
+                return True
+        visiting.remove(course)
+        self.visited.add(course)
+        return False
+    
+    def canFinish(self, numCourses, prerequisites):
+        self.graph = [[] for _ in range(numCourses)]
+        for dest, src in prerequisites:
+            self.graph[src].append(dest)
+
+        for i in range(numCourses):
+            if i not in self.visited:
+                if self.hasCycle(i, set()):
+                    return False
+        return True
+
+if __name__ == "__main__":
+    numCourses = int(input("Enter number of courses: "))
+    prerequisites_input = input("Enter prerequisites (Example '0 1,1 2'): ")
+    prerequisites = [list(map(int, pair.split())) for pair in prerequisites_input.split(",")]
+    schedule = CourseSchedule()
+    result = schedule.canFinish(numCourses, prerequisites)
+    print("Complete all courses:", result)
