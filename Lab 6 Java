@@ -1,0 +1,61 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
+class CourseSchedule {
+    private boolean hasCycle(int course, List<List<Integer>> graph, Set<Integer> visiting, Set<Integer> visited) {
+        if (visited.contains(course)) return false;
+        if (visiting.contains(course)) return true;
+
+        visiting.add(course);
+        for (int neighbor : graph.get(course)) {
+            if (hasCycle(neighbor, graph, visiting, visited)) return true;
+        }
+        visiting.remove(course);
+        visited.add(course);
+        return false;
+    }
+
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int[] prerequisite : prerequisites) {
+            graph.get(prerequisite[1]).add(prerequisite[0]);
+        }
+
+        Set<Integer> visited = new HashSet<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (!visited.contains(i)) {
+                Set<Integer> visiting = new HashSet<>();
+                if (hasCycle(i, graph, visiting, visited)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter number of courses: ");
+        int numCourses = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline left by nextInt()
+        System.out.println("Enter prerequisites (Example '0 1,1 2'): ");
+        String[] prerequisitePairs = scanner.nextLine().split(",");
+        int[][] prerequisites = new int[prerequisitePairs.length][2];
+        for (int i = 0; i < prerequisitePairs.length; i++) {
+            String[] parts = prerequisitePairs[i].trim().split(" ");
+            prerequisites[i][0] = Integer.parseInt(parts[0]);
+            prerequisites[i][1] = Integer.parseInt(parts[1]);
+        }
+        CourseSchedule schedule = new CourseSchedule();
+        boolean result = schedule.canFinish(numCourses, prerequisites);
+        System.out.println("Complete all courses: " + result);
+    }
+}
